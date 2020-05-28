@@ -38,13 +38,14 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <HelloWorld :list="posts" />
     </v-content>
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
+import axios from 'axios';
 
 export default {
   name: 'App',
@@ -54,7 +55,23 @@ export default {
   },
 
   data: () => ({
-    //
+    posts: []
   }),
+  async created(){
+    this.posts = await this.test();
+  },
+  methods: {
+    async test(){
+      let arr = [];
+      await axios('https://jsonplaceholder.typicode.com/posts')
+        .then(res => {
+          console.log('res => ',res.data);
+          arr = res.data;
+        }).catch(err => {
+          console.log(err);
+        });
+        return arr;
+    }
+  }
 };
 </script>
