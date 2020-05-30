@@ -5,55 +5,36 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-
-          
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <h1>Admin</h1>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
         text
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <h3>Administrator</h3>
+        <!--<v-icon>mdi-open-in-new</v-icon>-->
       </v-btn>
     </v-app-bar>
 
-    <v-content>
-      <HelloWorld :list="posts" />
+    <v-content class="blue lighten-5">
+      <login />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+// import HelloWorld from './components/HelloWorld';
+import Login from './components/Login';
+// import MenuBar from './components/MenuBar';
 import axios from 'axios';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Login
   },
 
   data: () => ({
@@ -77,3 +58,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+h1 {
+  letter-spacing: 6px;
+}
+</style>
