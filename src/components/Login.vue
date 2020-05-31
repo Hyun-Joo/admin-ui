@@ -42,6 +42,7 @@
                     name="login"
                     prepend-icon="mdi-account"
                     type="text"
+                    v-model="account"
                   ></v-text-field>
 
                   <v-text-field
@@ -50,12 +51,13 @@
                     name="password"
                     prepend-icon="mdi-lock"
                     type="password"
+                    v-model="password"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
+                <v-btn color="primary" @click.stop.prevent="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -66,7 +68,31 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: 'Login'
+  name: 'Login',
+  data(){
+    return {
+      account: "",
+      password: ""
+    }
+  },
+  created(){},
+  methods: {
+    async login(){
+      const param = { account: this.account, password: this.password};
+      try {
+        let res = await axios.post('http://localhost:3000/member/login', param);
+        console.log(res.data);
+        const rslt = res.data;
+        if(res.status === 200 && rslt.result && rslt.data === 1){
+          alert('FUCK U');
+        }
+      }catch(e){
+        console.log(e);
+      }      
+    }
+  }
 }
 </script>
