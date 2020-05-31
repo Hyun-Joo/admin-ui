@@ -44,9 +44,9 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld';
 import Login from './components/Login';
 // import MenuBar from './components/MenuBar';
+import CommonUtil from './assets/js/utils'
 import axios from 'axios';
 import { mapState } from 'vuex';
 
@@ -68,7 +68,7 @@ export default {
   }),
   created(){
     // this.posts = await this.test();
-    if(!this.jdmsMenuInfo || this.jdmsMenuInfo.length < 1){
+    if(CommonUtil.isEmpty(this.jdmsMenuInfo) || this.jdmsMenuInfo.length < 1){
       this.$store.dispatch("getMenuInfo");
     }    
   },
