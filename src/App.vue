@@ -37,13 +37,20 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- 아랫부분을 계정명으로 할지 하드코딩으로 놔둘지.... -->
-      <span style="letter-spacing:1px;">Administrator</span> 
+      <span style="letter-spacing:1px;" v-if="loginYn == 'Y'">
+        {{ account }}
+      </span> 
+      <span style="letter-spacing:1px;" v-else>
+        Administrator
+      </span>
     </v-app-bar>
-    <login />
+    <login v-if="loginYn == 'N'" :name="account" @updateName="updateName" />
+    <member-list v-else-if="loginYn == 'Y'" :list="memberList" />
   </v-app>
 </template>
 
 <script>
+import MemberList from './components/MemberList';
 import Login from './components/Login';
 // import MenuBar from './components/MenuBar';
 import CommonUtil from './assets/js/utils'
@@ -54,25 +61,35 @@ export default {
   name: 'App',
 
   components: {
-    Login
+    Login,
+    MemberList
   },
 
   computed: {
-    ...mapState(["jdmsMenuInfo"])
+    ...mapState(["jdmsMenuInfo", "memberList"])
   },
 
   data: () => ({
     posts: [],
     dialog: false,
-    drawer: null
+    drawer: null,
+    loginYn: 'N',
+    account: ""
   }),
   created(){
-    // this.posts = await this.test();
     if(CommonUtil.isEmpty(this.jdmsMenuInfo) || this.jdmsMenuInfo.length < 1){
       this.$store.dispatch("getMenuInfo");
     }    
+
+    if(CommonUtil.isEmpty(this.memberList) || this.memberList.length < 1){
+      this.$store.dispatch("getMemberList");
+    }
   },
   methods: {
+    updateName(name){
+      this.loginYn = 'Y';
+      this.account = name.toUpperCase();
+    },
     async test(){
       let arr = [];
       await axios('https://jsonplaceholder.typicode.com/posts')
