@@ -16,7 +16,7 @@ const CommonUtil = {
     }
   },
   ignoreEmptyNumber(val){
-    if(val === '0' || val === null || val === undefined || isNaN(val)){
+    if(val === 0 || val === '0' || val === null || val === undefined || isNaN(val)){
       return 0;
     }else{
       return val;

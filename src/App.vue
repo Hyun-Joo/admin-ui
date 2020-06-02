@@ -44,7 +44,10 @@
         Administrator
       </span>
     </v-app-bar>
-    <login v-if="loginYn == 'N'" :name="account" @updateName="updateName" />
+    <login v-if="loginYn == 'N'" 
+      :name="account"       
+      @updateName="updateName" 
+    />
     <member-list v-else-if="loginYn == 'Y'" :list="memberList" />
   </v-app>
 </template>
@@ -74,7 +77,8 @@ export default {
     dialog: false,
     drawer: null,
     loginYn: 'N',
-    account: ""
+    account: "",
+    showSignUpPage: false
   }),
   created(){
     if(CommonUtil.isEmpty(this.jdmsMenuInfo) || this.jdmsMenuInfo.length < 1){
