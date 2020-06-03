@@ -45,7 +45,7 @@
         </v-card-text>
         <v-divider class="mt-12"></v-divider>
         <v-card-actions>
-          <v-btn reset>Cancel</v-btn>
+          <v-btn reset @click="back">Cancel</v-btn>
           <v-spacer></v-spacer>
           <v-slide-x-reverse-transition>
             <v-tooltip
@@ -82,6 +82,9 @@ export default {
     }
   },
   methods: {
+    back(){
+      location.reload();
+    },
     pwdCheck(){
       if(CommonUtil.isEmpty(this.password) || (this.password != this.pwcheck)){
         document.getElementById('pwChkMsg').innerHTML = Constants.PWD_NOT_EQUAL_MSG;
