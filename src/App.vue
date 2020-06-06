@@ -10,7 +10,7 @@
         <template v-for="item in jdmsMenuInfo">
           <v-list-item
             :key="item.text"
-            link
+            router :to="{name: item.link}"
           >
             <v-list-item-content>
               <v-list-item-title style="color:white;letter-spacing:2px;font-weight:400;">
@@ -35,20 +35,29 @@
       >
         <span class="hidden-sm-and-down">Admin</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
+      <v-btn color="deep-purple accent-4" v-if="account != ''">
+        LOGOUT
+      </v-btn>
+      <v-btn color="deep-purple accent-4" router :to="{name: 'Login'}"  v-else>
+        LOGIN
+      </v-btn>
       <!-- 아랫부분을 계정명으로 할지 하드코딩으로 놔둘지.... -->
-      <span style="letter-spacing:1px;" v-if="loginYn == 'Y'">
+      <span class="ml-4" v-if="account != ''">
         {{ account }}
       </span> 
-      <span style="letter-spacing:1px;" v-else>
+      <span class="ml-4" v-else>
         Administrator
       </span>
     </v-app-bar>
-    <login v-if="loginYn == 'N'" 
+    <v-content class="blue-grey lighten-4">
+      <router-view />
+    </v-content>
+    <!--<login v-if="loginYn == 'N'" 
       :name="account"       
       @updateName="updateName" 
     />
-    <member-list v-else-if="loginYn == 'Y'" :list="memberList" />
+    <member-list v-else-if="loginYn == 'Y'" :list="memberList" />-->
   </v-app>
 </template>
 
@@ -76,7 +85,6 @@ export default {
     posts: [],
     dialog: false,
     drawer: null,
-    loginYn: 'N',
     account: "",
     showSignUpPage: false
   }),
@@ -84,16 +92,17 @@ export default {
     if(CommonUtil.isEmpty(this.jdmsMenuInfo) || this.jdmsMenuInfo.length < 1){
       this.$store.dispatch("getMenuInfo");
     }    
+    
+    const mbId = CommonUtil.getCookie('mbId');
+    if(!CommonUtil.isEmpty(mbId)){
+      this.account = mbId.toUpperCase();
+    }
 
     if(CommonUtil.isEmpty(this.memberList) || this.memberList.length < 1){
       this.$store.dispatch("getMemberList");
     }
   },
   methods: {
-    updateName(name){
-      this.loginYn = 'Y';
-      this.account = name.toUpperCase();
-    },
     async test(){
       let arr = [];
       await axios('https://jsonplaceholder.typicode.com/posts')
@@ -113,5 +122,8 @@ export default {
   font-size: 28px;
   letter-spacing: 3px;
   font-weight: 600;
+}
+.ml-4 {
+  letter-spacing: 1px;
 }
 </style>

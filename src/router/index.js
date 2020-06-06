@@ -1,15 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import SignUp from '@/components/SignUp'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
-      path: '/signup',
-      name: 'SignUp',
-      component: SignUp
+      path: '/',
+      name: 'Home',
+      component: () => import('../components/HelloWorld')
+    },
+    {
+      path: '/member-list',
+      name: 'MemberList',
+      component: () => import('../components/MemberList')
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../components/Login'),
+      props: true
     }
   ]
 })

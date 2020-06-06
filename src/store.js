@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
   actions: {
     getMenuInfo(){
       let items = [
-        { id: 0, text: '고객 관리' },
+        { id: 0, text: '고객 관리', link: 'MemberList' },
         { id: 1, text: '상품 관리' },
         { id: 2, text: '파트너사 관리' },
         { id: 3, text: '주문 관리' },
