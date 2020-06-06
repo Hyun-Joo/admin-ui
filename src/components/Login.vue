@@ -1,5 +1,5 @@
 <template>
-    <v-content class="blue-grey lighten-4">
+  <div>
       <v-container
         v-if="!showSignUpPage"
         class="fill-height"
@@ -55,13 +55,13 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn color="success" @click.stop="showSignUpPage = !showSignUpPage">
+                <v-btn color="success" class="ml-2 mb-2" @click.stop="showSignUpPage = !showSignUpPage">
                   회원가입
                 </v-btn>
                 <v-spacer />
                 <small class="red--text" id="loginFailMsg"></small>
                 <v-spacer />
-                <v-btn color="primary" @click="login">Login</v-btn>
+                <v-btn color="primary" class="mr-2 mb-2" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -69,7 +69,7 @@
       </v-container>
       <!-- 아래 회원가입 페이지 -->
       <sign-up v-if="showSignUpPage" />
-    </v-content>
+  </div>
 </template>
 
 <script>
@@ -104,11 +104,13 @@ export default {
       const params = { account: this.account, password: this.password };
       try {
         let res = await axios.post(`${process.env.VUE_APP_URL}/member/login`, params);
-        // console.log(res.data);
+        console.log(res);
         const rslt = res.data;
         if(res.status === 200 && rslt.result && rslt.data === 1){
-          console.log('FUCK U');
-          me.$emit('updateName', me.account);
+          alert('FUCK U');
+          // me.$emit('updateName', me.account);
+          CommonUtil.setCookie('mbId',me.account,1);
+          location.href = `${process.env.BASE_URL}`;
         }else{
           document.getElementById('loginFailMsg').innerHTML = Constants.LOGIN_FAIL_MSG;
           return;

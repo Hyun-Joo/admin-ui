@@ -1,5 +1,4 @@
 <template>
-  <v-content>
   <v-simple-table class="fill-height" fluid style="background-color:#CFD8DC;">
     <template v-slot:default align="center" justify="center">
       <thead>
@@ -13,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in list" :key="item.name">
+        <tr v-for="item in memberList" :key="item.name">
           <td>{{ item.id }}</td>
           <td>{{ item.account }}</td>
           <td>{{ item.phone_number }}</td>
@@ -24,18 +23,21 @@
       </tbody>
     </template>
   </v-simple-table>
-  </v-content>
 </template>
 <script>
+import { mapState } from 'vuex';
 
 export default {
   name: 'MemberList',
   props: {
-    list: {
-      type: Array,
-      default: []
-    }
-  }
+    // list: {
+    //   type: Array,
+    //   default: []
+    // }
+  },
+  computed: {
+    ...mapState(['memberList'])
+  },
 }
 </script>
 <style lang="scss" scoped>
